@@ -7,20 +7,13 @@ import './widgets/NumberButton.dart';
 class BasicCalculator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-
     return Scaffold(
       body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(
-                defaultPadding,
-                0,
-                defaultPadding,
-                14,
-              ),
+              padding: EdgeInsets.only(right: defaultPadding, bottom: 14),
               child: Column(
                 children: [
                   SizedBox(
@@ -41,6 +34,7 @@ class BasicCalculator extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Container(
+                    padding: EdgeInsets.only(left: defaultPadding),
                     alignment: AlignmentDirectional.centerEnd,
                     width: double.infinity,
                     child: FittedBox(
@@ -61,11 +55,9 @@ class BasicCalculator extends StatelessWidget {
                 defaultPadding,
                 defaultPadding,
                 defaultPadding,
-                53,
+                50,
               ),
               width: double.infinity,
-              height: height * 0.6,
-              // height:
               decoration: BoxDecoration(
                 color: Theme.of(context).accentColor,
                 borderRadius: BorderRadius.vertical(
@@ -76,19 +68,46 @@ class BasicCalculator extends StatelessWidget {
                 children: [
                   TableRow(
                     children: [
-                      ActionButton(),
-                      ActionButton(),
-                      ActionButton(),
-                      ActionButton(),
+                      ActionButton(text: "AC"),
+                      ActionButton(icon: Icons.brightness_4_outlined),
+                      ActionButton(text: '%'),
+                      ActionButton(unicodeText: "\u00f7"),
                     ],
                   ),
-                  buildTableRowSpacing(),
+                  _buildTableRowSpacing(),
                   TableRow(
                     children: [
                       NumberButton('7'),
                       NumberButton('8'),
                       NumberButton('9'),
-                      NumberButton('9'),
+                      ActionButton(unicodeText: "\u00d7"),
+                    ],
+                  ),
+                  _buildTableRowSpacing(),
+                  TableRow(
+                    children: [
+                      NumberButton('4'),
+                      NumberButton('5'),
+                      NumberButton('6'),
+                      ActionButton(unicodeText: "\u2013"),
+                    ],
+                  ),
+                  _buildTableRowSpacing(),
+                  TableRow(
+                    children: [
+                      NumberButton('1'),
+                      NumberButton('2'),
+                      NumberButton('3'),
+                      ActionButton(unicodeText: "\u002b"),
+                    ],
+                  ),
+                  _buildTableRowSpacing(),
+                  TableRow(
+                    children: [
+                      NumberButton('0'),
+                      NumberButton('.'),
+                      ActionButton(icon: Icons.backspace_outlined),
+                      ActionButton(unicodeText: "\u003d"),
                     ],
                   ),
                 ],
@@ -100,10 +119,11 @@ class BasicCalculator extends StatelessWidget {
     );
   }
 
-  TableRow buildTableRowSpacing() {
+  List<TableRow> _buildTableRows() {}
+
+  TableRow _buildTableRowSpacing() {
     return TableRow(
       children: List.generate(4, (index) => SizedBox(height: 22.4)),
     );
   }
 }
-
