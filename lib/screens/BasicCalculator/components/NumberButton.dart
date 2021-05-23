@@ -4,15 +4,17 @@ import '../../../constants.dart';
 
 class NumberButton extends StatelessWidget {
   final String numberText;
+  final Function(String) numberButtonPressed;
 
   const NumberButton(
     this.numberText, 
-    {Key key}) : super(key: key);
+    this.numberButtonPressed,
+    {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
+    return InkWell(
+      onTap: () => numberButtonPressed(numberText),
       child: Container(
         width: buttonDiameter,
         height: buttonDiameter,
@@ -21,7 +23,7 @@ class NumberButton extends StatelessWidget {
           numberText,
           style: TextStyle(
             fontSize: 40,
-            color: Theme.of(context).textTheme.bodyText1.color,
+            color: null,
           ),
         ),
       ),

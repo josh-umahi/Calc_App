@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
-import './widgets/ActionButton.dart';
-import './widgets/NumberButton.dart';
+import './widgets/TableOfButtons.dart';
+import './enums.dart';
 
-class BasicCalculator extends StatelessWidget {
+class BasicCalculator extends StatefulWidget {
   @override
+  _BasicCalculatorState createState() => _BasicCalculatorState();
+}
+
+class _BasicCalculatorState extends State<BasicCalculator> {
+  String _question = "";
+
   Widget build(BuildContext context) {
+    print(_question);
     return Scaffold(
       body: Container(
         child: Column(
@@ -64,53 +71,9 @@ class BasicCalculator extends StatelessWidget {
                   top: Radius.circular(20),
                 ),
               ),
-              child: Table(
-                children: [
-                  TableRow(
-                    children: [
-                      ActionButton(text: "AC"),
-                      ActionButton(icon: Icons.brightness_4_outlined),
-                      ActionButton(text: '%'),
-                      ActionButton(unicodeText: "\u00f7"),
-                    ],
-                  ),
-                  _buildTableRowSpacing(),
-                  TableRow(
-                    children: [
-                      NumberButton('7'),
-                      NumberButton('8'),
-                      NumberButton('9'),
-                      ActionButton(unicodeText: "\u00d7"),
-                    ],
-                  ),
-                  _buildTableRowSpacing(),
-                  TableRow(
-                    children: [
-                      NumberButton('4'),
-                      NumberButton('5'),
-                      NumberButton('6'),
-                      ActionButton(unicodeText: "\u2013"),
-                    ],
-                  ),
-                  _buildTableRowSpacing(),
-                  TableRow(
-                    children: [
-                      NumberButton('1'),
-                      NumberButton('2'),
-                      NumberButton('3'),
-                      ActionButton(unicodeText: "\u002b"),
-                    ],
-                  ),
-                  _buildTableRowSpacing(),
-                  TableRow(
-                    children: [
-                      NumberButton('0'),
-                      NumberButton('.'),
-                      ActionButton(icon: Icons.backspace_outlined),
-                      ActionButton(unicodeText: "\u003d"),
-                    ],
-                  ),
-                ],
+              child: TableOfButtons(
+                numberButtonPressed: numberButtonPressed,
+                actionButtonPressed: actionButtonPressed,
               ),
             ),
           ],
@@ -119,11 +82,47 @@ class BasicCalculator extends StatelessWidget {
     );
   }
 
-  List<TableRow> _buildTableRows() {}
+  void numberButtonPressed(String numberText) {
+    setState(() {
+      _question += numberText;
+    });
+  }
 
-  TableRow _buildTableRowSpacing() {
-    return TableRow(
-      children: List.generate(4, (index) => SizedBox(height: 22.4)),
-    );
+  void actionButtonPressed(ActionButtonID actionId) {
+    setState(() {
+      switch (actionId) {
+        case ActionButtonID.AC:
+          _question = "";
+          break;
+        case ActionButtonID.ChangeTheme:
+          // A Function
+          break;
+        case ActionButtonID.Percentage:
+          // A Function
+          break;
+        case ActionButtonID.Divide:
+          // A Function
+          break;
+        case ActionButtonID.Multiply:
+          // A Function
+          break;
+        case ActionButtonID.Subtract:
+          // A Function
+          break;
+        case ActionButtonID.Add:
+          // A Function
+          break;
+        case ActionButtonID.Equals:
+          // A Function
+          break;
+        case ActionButtonID.Backspace:
+          if (_question.length != 0) {
+            _question = _question.substring(0, _question.length - 1);
+          }
+          break;
+        default:
+          break;
+      }
+    });
   }
 }
