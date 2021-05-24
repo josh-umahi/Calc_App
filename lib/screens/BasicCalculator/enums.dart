@@ -1,7 +1,7 @@
 enum ActionID {
   AC,
   ChangeTheme,
-  Percentage,
+  ChangeSign,
   Divide,
   Multiply,
   Subtract,

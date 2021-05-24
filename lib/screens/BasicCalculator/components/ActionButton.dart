@@ -47,8 +47,8 @@ class ActionButton extends StatelessWidget {
         case ActionID.ChangeTheme:
           _icon = Icons.brightness_4_outlined;
           break;
-        case ActionID.Percentage:
-          _text = '%';
+        case ActionID.ChangeSign:
+          _text = '+/-';
           break;
         case ActionID.Divide:
           _unicodeText = ActionID.Divide.symbol;

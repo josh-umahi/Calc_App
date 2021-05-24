@@ -182,7 +182,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
         case ActionID.ChangeTheme:
           // A Function
           break;
-        case ActionID.Percentage:
+        case ActionID.ChangeSign:
           // A Function
           break;
         case ActionID.Divide:

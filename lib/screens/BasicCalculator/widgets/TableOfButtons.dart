@@ -29,7 +29,7 @@ class TableOfButtons extends StatelessWidget {
               actionButtonPressed: actionButtonPressed,
             ),
             ActionButton(
-              actionId: ActionID.Percentage,
+              actionId: ActionID.ChangeSign,
               actionButtonPressed: actionButtonPressed,
             ),
             ActionButton(
