@@ -32,8 +32,8 @@ class ActionButton extends StatelessWidget {
   String? _text;
   String? _unicodeText;
   IconData? _icon;
-  final Function(ActionButtonID actionId) actionButtonPressed;
-  final ActionButtonID actionId;
+  final Function(ActionID actionId) actionButtonPressed;
+  final ActionID actionId;
 
   ActionButton({
     Key? key,
@@ -41,31 +41,31 @@ class ActionButton extends StatelessWidget {
     required this.actionId,
   }) : super(key: key){
     switch (actionId) {
-        case ActionButtonID.AC:
+        case ActionID.AC:
           _text = "AC";
           break;
-        case ActionButtonID.ChangeTheme:
+        case ActionID.ChangeTheme:
           _icon = Icons.brightness_4_outlined;
           break;
-        case ActionButtonID.Percentage:
-          _text = "%";
+        case ActionID.Percentage:
+          _text = '%';
           break;
-        case ActionButtonID.Divide:
-          _unicodeText = "\u00f7";
+        case ActionID.Divide:
+          _unicodeText = ActionID.Divide.symbol;
           break;
-        case ActionButtonID.Multiply:
-          _unicodeText = "\u00d7";
+        case ActionID.Multiply:
+          _unicodeText = ActionID.Multiply.symbol;
           break;
-        case ActionButtonID.Subtract:
-          _unicodeText = "\u2013";
+        case ActionID.Subtract:
+          _unicodeText = ActionID.Subtract.symbol;
           break;
-        case ActionButtonID.Add:
-          _unicodeText = "\u002b";
+        case ActionID.Add:
+          _unicodeText = ActionID.Add.symbol;
           break;
-        case ActionButtonID.Equals:
+        case ActionID.Equals:
           _unicodeText = "\u003d";
           break;
-        case ActionButtonID.Backspace:
+        case ActionID.Backspace:
           _icon = Icons.backspace_outlined;
           break;
         default:

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../constants.dart';
 import './widgets/TableOfButtons.dart';
 import './enums.dart';
+import './functions.dart';
 
 class BasicCalculator extends StatefulWidget {
   @override
@@ -10,10 +11,19 @@ class BasicCalculator extends StatefulWidget {
 }
 
 class _BasicCalculatorState extends State<BasicCalculator> {
-  String _question = "";
+  static const _zeroStr = "0";
+  static const _negativeSignStr = "-";
+  String _previousOperand = "";
+  String _currentOperand = _zeroStr;
+  ActionID? _currentOperation;
+
+  @override
+  void initState() {
+    super.initState();
+    allClear();
+  }
 
   Widget build(BuildContext context) {
-    print(_question);
     return Scaffold(
       body: Container(
         child: Column(
@@ -31,7 +41,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
                       scrollDirection: Axis.horizontal,
                       children: [
                         Text(
-                          "12 + 5",
+                          _previousOperand,
                           style: TextStyle(
                             fontSize: 25,
                           ),
@@ -47,7 +57,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
-                        "87",
+                        _currentOperand,
                         style: TextStyle(
                           fontSize: 70,
                         ),
@@ -72,7 +82,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
                 ),
               ),
               child: TableOfButtons(
-                numberButtonPressed: numberButtonPressed,
+                numberButtonPressed: appendNumber,
                 actionButtonPressed: actionButtonPressed,
               ),
             ),
@@ -82,43 +92,116 @@ class _BasicCalculatorState extends State<BasicCalculator> {
     );
   }
 
-  void numberButtonPressed(String numberText) {
+  void allClear() {
+    _previousOperand = "";
+    _currentOperand = _zeroStr;
+    _currentOperation = null;
+  }
+
+  void appendNumber(String numberStrToAppend) {
+    if (numberStrToAppend == "." && _currentOperand.contains(".")) {
+      return;
+    }
+
     setState(() {
-      _question += numberText;
+      if (_currentOperand == _zeroStr && numberStrToAppend != ".") {
+        _currentOperand = numberStrToAppend;
+        return;
+      }
+      if (_currentOperand == _negativeSignStr+_zeroStr && numberStrToAppend != ".") {
+        _currentOperand = _negativeSignStr + numberStrToAppend;
+        return;
+      }
+      _currentOperand = reformatNumber(_currentOperand + numberStrToAppend);
     });
   }
 
-  void actionButtonPressed(ActionButtonID actionId) {
+  void deleteNumber() {
+    if (_currentOperand.length > 1) {
+      _currentOperand = reformatNumber(
+          _currentOperand.substring(0, _currentOperand.length - 1));
+    } else {
+      _currentOperand = _zeroStr;
+    }
+  }
+
+  void chooseOperation(ActionID _selectedOperation) {
+    String nextOperand = _zeroStr;
+    if (_currentOperand == _negativeSignStr) return;
+    if (_currentOperation != null && _selectedOperation != ActionID.Subtract) return;
+    if (_currentOperation != null ) {
+        nextOperand = _negativeSignStr + _zeroStr;
+    }
+      // CANNOT compute result here unless it interferes with the negative
+
+    setState(() {
+      _previousOperand = _currentOperand + " ${_selectedOperation.symbol} ";
+      _currentOperand = nextOperand;
+      _currentOperation = _selectedOperation;
+    });
+  }
+
+  void computeResult() {
+    double firstOperand = extractDoubleFromString(_previousOperand);
+    double secondOperand = extractDoubleFromString(_currentOperand);
+    num result = 0;
+
+    switch (_currentOperation) {
+      case ActionID.Add:
+        result = firstOperand + secondOperand;
+        break;
+      case ActionID.Subtract:
+        result = firstOperand - secondOperand;
+        break;
+      case ActionID.Multiply:
+        result = firstOperand * secondOperand;
+        break;
+      case ActionID.Divide:
+        result = firstOperand / secondOperand;
+        break;
+      default:
+        print("The default was reached in computeResult");
+        break;
+    }
+
+    String resultAsString =
+        isInteger(result) ? "${result.toString().split('.')[0]}" : "$result";
+
+    setState(() {
+      _currentOperand = reformatNumber(resultAsString);
+      _currentOperation = null;
+    });
+  }
+
+  void actionButtonPressed(ActionID actionId) {
     setState(() {
       switch (actionId) {
-        case ActionButtonID.AC:
-          _question = "";
+        case ActionID.AC:
+          allClear();
           break;
-        case ActionButtonID.ChangeTheme:
+        case ActionID.ChangeTheme:
           // A Function
           break;
-        case ActionButtonID.Percentage:
+        case ActionID.Percentage:
           // A Function
           break;
-        case ActionButtonID.Divide:
-          // A Function
+        case ActionID.Divide:
+          chooseOperation(ActionID.Divide);
           break;
-        case ActionButtonID.Multiply:
-          // A Function
+        case ActionID.Multiply:
+          chooseOperation(ActionID.Multiply);
           break;
-        case ActionButtonID.Subtract:
-          // A Function
+        case ActionID.Subtract:
+          chooseOperation(ActionID.Subtract);
           break;
-        case ActionButtonID.Add:
-          // A Function
+        case ActionID.Add:
+          chooseOperation(ActionID.Add);
           break;
-        case ActionButtonID.Equals:
-          // A Function
+        case ActionID.Equals:
+          computeResult();
           break;
-        case ActionButtonID.Backspace:
-          if (_question.length != 0) {
-            _question = _question.substring(0, _question.length - 1);
-          }
+        case ActionID.Backspace:
+          deleteNumber();
           break;
         default:
           break;

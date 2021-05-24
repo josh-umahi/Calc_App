@@ -6,7 +6,7 @@ import '../enums.dart';
 
 class TableOfButtons extends StatelessWidget {
   final Function(String) numberButtonPressed;
-  final Function(ActionButtonID actionId) actionButtonPressed;
+  final Function(ActionID actionId) actionButtonPressed;
 
   const TableOfButtons({
     Key? key,
@@ -21,19 +21,19 @@ class TableOfButtons extends StatelessWidget {
         TableRow(
           children: [
             ActionButton(
-              actionId: ActionButtonID.AC,
+              actionId: ActionID.AC,
               actionButtonPressed: actionButtonPressed,
             ),
             ActionButton(
-              actionId: ActionButtonID.ChangeTheme,
+              actionId: ActionID.ChangeTheme,
               actionButtonPressed: actionButtonPressed,
             ),
             ActionButton(
-              actionId: ActionButtonID.Percentage,
+              actionId: ActionID.Percentage,
               actionButtonPressed: actionButtonPressed,
             ),
             ActionButton(
-              actionId: ActionButtonID.Divide,
+              actionId: ActionID.Divide,
               actionButtonPressed: actionButtonPressed,
             ),
           ],
@@ -45,7 +45,7 @@ class TableOfButtons extends StatelessWidget {
             NumberButton('8', numberButtonPressed),
             NumberButton('9', numberButtonPressed),
             ActionButton(
-              actionId: ActionButtonID.Multiply,
+              actionId: ActionID.Multiply,
               actionButtonPressed: actionButtonPressed,
             ),
           ],
@@ -57,7 +57,7 @@ class TableOfButtons extends StatelessWidget {
             NumberButton('5', numberButtonPressed),
             NumberButton('6', numberButtonPressed),
             ActionButton(
-              actionId: ActionButtonID.Subtract,
+              actionId: ActionID.Subtract,
               actionButtonPressed: actionButtonPressed,
             ),
           ],
@@ -69,7 +69,7 @@ class TableOfButtons extends StatelessWidget {
             NumberButton('2', numberButtonPressed),
             NumberButton('3', numberButtonPressed),
             ActionButton(
-              actionId: ActionButtonID.Add,
+              actionId: ActionID.Add,
               actionButtonPressed: actionButtonPressed,
             ),
           ],
@@ -80,11 +80,11 @@ class TableOfButtons extends StatelessWidget {
             NumberButton('0', numberButtonPressed),
             NumberButton('.', numberButtonPressed),
             ActionButton(
-              actionId: ActionButtonID.Backspace,
+              actionId: ActionID.Backspace,
               actionButtonPressed: actionButtonPressed,
             ),
             ActionButton(
-              actionId: ActionButtonID.Equals,
+              actionId: ActionID.Equals,
               actionButtonPressed: actionButtonPressed,
             ),
           ],
