@@ -24,6 +24,9 @@ class _BasicCalculatorState extends State<BasicCalculator> {
   }
 
   Widget build(BuildContext context) {
+    print("_previousOperand: $_previousOperand");
+    print("_currentOperand: $_currentOperand");
+    print("_currentOperation: $_currentOperation");
     return Scaffold(
       body: Container(
         child: Column(
@@ -93,9 +96,11 @@ class _BasicCalculatorState extends State<BasicCalculator> {
   }
 
   void allClear() {
-    _previousOperand = "";
-    _currentOperand = _zeroStr;
-    _currentOperation = null;
+    setState(() {
+      _previousOperand = "";
+      _currentOperand = _zeroStr;
+      _currentOperation = null;
+    });
   }
 
   void appendNumber(String numberStrToAppend) {
@@ -104,108 +109,97 @@ class _BasicCalculatorState extends State<BasicCalculator> {
     }
 
     setState(() {
-      if (_currentOperand == _zeroStr && numberStrToAppend != ".") {
-        _currentOperand = numberStrToAppend;
-        return;
-      }
-      if (_currentOperand == _negativeSignStr+_zeroStr && numberStrToAppend != ".") {
-        _currentOperand = _negativeSignStr + numberStrToAppend;
-        return;
+      if (numberStrToAppend != ".") {
+        if (_currentOperand == _zeroStr) {
+          _currentOperand = numberStrToAppend;
+          return;
+        }
+        if (_currentOperand == _negativeSignStr + _zeroStr) {
+          _currentOperand = _negativeSignStr + numberStrToAppend;
+          return;
+        }
       }
       _currentOperand = reformatNumber(_currentOperand + numberStrToAppend);
     });
   }
 
   void deleteNumber() {
-    if (_currentOperand.length > 1) {
+    RegExp regexNegativeDigit = RegExp(r"^-\d{1}$");
+    RegExp regexPositiveDigit = RegExp(r"^\d{1}$");
+
+    setState(() {
+      if (regexNegativeDigit.hasMatch(_currentOperand)) {
+        _currentOperand = _negativeSignStr + _zeroStr;
+        return;
+      }
+      if (regexPositiveDigit.hasMatch(_currentOperand)) {
+        _currentOperand = _zeroStr;
+        return;
+      }
       _currentOperand = reformatNumber(
           _currentOperand.substring(0, _currentOperand.length - 1));
-    } else {
-      _currentOperand = _zeroStr;
-    }
+    });
+  }
+
+  void changeSign() {
+    setState(() {
+      _currentOperand = (_currentOperand.contains(_negativeSignStr))
+          ? _currentOperand.replaceFirst(_negativeSignStr, '')
+          : _negativeSignStr + _currentOperand;
+    });
   }
 
   void chooseOperation(ActionID _selectedOperation) {
-    String nextOperand = _zeroStr;
-    if (_currentOperand == _negativeSignStr) return;
-    if (_currentOperation != null && _selectedOperation != ActionID.Subtract) return;
-    if (_currentOperation != null ) {
-        nextOperand = _negativeSignStr + _zeroStr;
+    if (_currentOperation != null) {
+      displayResultOfCalculation();
     }
-      // CANNOT compute result here unless it interferes with the negative
 
     setState(() {
       _previousOperand = _currentOperand + " ${_selectedOperation.symbol} ";
-      _currentOperand = nextOperand;
+      _currentOperand = _zeroStr;
       _currentOperation = _selectedOperation;
     });
   }
 
-  void computeResult() {
-    double firstOperand = extractDoubleFromString(_previousOperand);
-    double secondOperand = extractDoubleFromString(_currentOperand);
-    num result = 0;
-
-    switch (_currentOperation) {
-      case ActionID.Add:
-        result = firstOperand + secondOperand;
-        break;
-      case ActionID.Subtract:
-        result = firstOperand - secondOperand;
-        break;
-      case ActionID.Multiply:
-        result = firstOperand * secondOperand;
-        break;
-      case ActionID.Divide:
-        result = firstOperand / secondOperand;
-        break;
-      default:
-        print("The default was reached in computeResult");
-        break;
-    }
-
-    String resultAsString =
-        isInteger(result) ? "${result.toString().split('.')[0]}" : "$result";
-
+  void displayResultOfCalculation() {
     setState(() {
-      _currentOperand = reformatNumber(resultAsString);
+      _currentOperand = calculateResult(_previousOperand, _currentOperand, _currentOperation);
+      _previousOperand = "";
       _currentOperation = null;
     });
   }
 
   void actionButtonPressed(ActionID actionId) {
-    setState(() {
-      switch (actionId) {
-        case ActionID.AC:
-          allClear();
-          break;
-        case ActionID.ChangeTheme:
-          // A Function
-          break;
-        case ActionID.ChangeSign:
-          // A Function
-          break;
-        case ActionID.Divide:
-          chooseOperation(ActionID.Divide);
-          break;
-        case ActionID.Multiply:
-          chooseOperation(ActionID.Multiply);
-          break;
-        case ActionID.Subtract:
-          chooseOperation(ActionID.Subtract);
-          break;
-        case ActionID.Add:
-          chooseOperation(ActionID.Add);
-          break;
-        case ActionID.Equals:
-          computeResult();
-          break;
-        case ActionID.Backspace:
-          deleteNumber();
-          break;
-        default:
-          break;
-      }
-    });
+    switch (actionId) {
+      case ActionID.AC:
+        allClear();
+        break;
+      case ActionID.ChangeTheme:
+        // A Function
+        break;
+      case ActionID.ChangeSign:
+        changeSign();
+        break;
+      case ActionID.Divide:
+        chooseOperation(ActionID.Divide);
+        break;
+      case ActionID.Multiply:
+        chooseOperation(ActionID.Multiply);
+        break;
+      case ActionID.Subtract:
+        chooseOperation(ActionID.Subtract);
+        break;
+      case ActionID.Add:
+        chooseOperation(ActionID.Add);
+        break;
+      case ActionID.Equals:
+        displayResultOfCalculation();
+        break;
+      case ActionID.Backspace:
+        deleteNumber();
+        break;
+      default:
+        break;
+    }
   }
 }

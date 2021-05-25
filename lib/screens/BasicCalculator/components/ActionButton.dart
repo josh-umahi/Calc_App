@@ -48,7 +48,8 @@ class ActionButton extends StatelessWidget {
           _icon = Icons.brightness_4_outlined;
           break;
         case ActionID.ChangeSign:
-          _text = '+/-';
+          // _text = '+/-';
+          _text = "\u00B1";
           break;
         case ActionID.Divide:
           _unicodeText = ActionID.Divide.symbol;
