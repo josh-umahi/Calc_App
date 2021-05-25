@@ -58,7 +58,6 @@ double extractDoubleFromString(String numStr) {
 }
 
 String convertTo3dp(double value) {
-  print(isInteger(value));
   print((value));
   if (isInteger(value)) {
     return value.toString().split('.')[0];
@@ -72,6 +71,5 @@ String convertTo3dp(double value) {
 }
 
 bool isInteger(double value) {
-  RegExp regexIsInteger = RegExp(r"^[-]?\d+$");
-  return regexIsInteger.hasMatch(value.toString());
+  return value is int || value == value.roundToDouble();
 }
