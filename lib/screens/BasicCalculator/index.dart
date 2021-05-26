@@ -11,11 +11,11 @@ class BasicCalculator extends StatefulWidget {
 }
 
 class _BasicCalculatorState extends State<BasicCalculator> {
-  static const _zeroStr = "0";
-  static const _negativeSignStr = "-";
+  static const _zeroStr = '0';
+  static const _negativeSignStr = '-';
   static const _maxInputLength = maxResultLength;
 
-  String _previousOperand = "";
+  String _previousOperand = '';
   String _currentOperand = _zeroStr;
   ActionID? _currentOperation;
 
@@ -49,6 +49,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
                           _previousOperand,
                           style: TextStyle(
                             fontSize: 25,
+                            color: Colors.white,
                           ),
                         ),
                       ],
@@ -65,6 +66,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
                         _currentOperand,
                         style: TextStyle(
                           fontSize: 70,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -106,7 +108,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
   }
 
   void appendNumber(String numberStrToAppend) {
-    if (_currentOperand.length > maxResultLength) return;
+    if (_currentOperand.length > _maxInputLength) return;
     if (numberStrToAppend == "." && _currentOperand.contains(".")) return;
 
     setState(() {

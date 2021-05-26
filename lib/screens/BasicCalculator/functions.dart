@@ -10,6 +10,8 @@ bool errorOnScreen(String _currentOperand) {
   return _currentOperand == errorText;
 }
 
+/// Calculates the result of operation and
+/// returns this as a string in the appropriate format
 String calculateResult(
   String _previousOperand,
   String _currentOperand,

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import './constants.dart';
 
 ThemeData lightThemeData(BuildContext context) {
-  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
   return ThemeData.light().copyWith(
     primaryColor: Colors.white,
     accentColor: lightLowerBgColor,
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: darkLowerBgColor,
     iconTheme: sharedIconTheme,
     textTheme: ThemeData.light().textTheme.apply(
           fontFamily: sharedFontFamily,
@@ -18,7 +16,6 @@ ThemeData lightThemeData(BuildContext context) {
 }
 
 ThemeData darkThemeData(BuildContext context) {
-  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
   return ThemeData.light().copyWith(
     primaryColor: darkPrimaryColor,
     accentColor: darkLowerBgColor,
