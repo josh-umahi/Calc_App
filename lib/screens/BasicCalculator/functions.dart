@@ -3,9 +3,11 @@ import 'package:intl/intl.dart';
 import '../../screens/BasicCalculator/enums.dart';
 
 const errorText = "Error";
+const decimalPlaces = 3;
+const maxResultLength = 9 + decimalPlaces;
 
-bool errorOnScreen(String _currentOperand){
-  return _currentOperand ==errorText;
+bool errorOnScreen(String _currentOperand) {
+  return _currentOperand == errorText;
 }
 
 String calculateResult(
@@ -41,36 +43,40 @@ String calculateResult(
       print("The default was reached in calculateResult");
       break;
   }
-
   print("Result as a double >>>> $result");
-  String resultAsString = convertTo3dp(result);
-  return reformatNumber(resultAsString);
+  String resultRounded = roundToDecimalPlaces(result);
+
+  if (resultRounded.length > maxResultLength) {
+    return result.toStringAsExponential(3);
+  }
+  return reformatNumber(resultRounded);
 }
 
 String reformatNumber(String numberToReformat) {
   List<String> numberSplit = numberToReformat.split('.');
   String integerSection = numberSplit[0];
+
   if (integerSection.length > 3) {
     var f = NumberFormat();
     integerSection = f.format(int.parse(integerSection.replaceAll(',', '')));
   }
-  if (numberSplit.length > 1) {
-    return "$integerSection.${numberSplit[1]}";
-  } else {
+
+  if (numberSplit.length == 1) {
     return integerSection;
   }
+  return "$integerSection.${numberSplit[1]}";
 }
 
 double extractDoubleFromString(String numStr) {
   return double.parse(numStr.split(' ')[0].replaceAll(',', ''));
 }
 
-String convertTo3dp(double value) {
+String roundToDecimalPlaces(double value) {
   if (isInteger(value)) {
     return value.toString().split('.')[0];
   }
 
-  String result = value.toStringAsFixed(3);
+  String result = value.toStringAsFixed(decimalPlaces);
   while (result.contains('.') && result.endsWith('0')) {
     result = result.substring(0, result.length - 1);
   }
