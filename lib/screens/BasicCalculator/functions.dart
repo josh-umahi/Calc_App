@@ -2,7 +2,11 @@ import 'package:intl/intl.dart';
 
 import '../../screens/BasicCalculator/enums.dart';
 
-const _infinityStr = "\u221E";
+const errorText = "Error";
+
+bool errorOnScreen(String _currentOperand){
+  return _currentOperand ==errorText;
+}
 
 String calculateResult(
   String _previousOperand,
@@ -27,14 +31,18 @@ String calculateResult(
       result = firstOperand * secondOperand;
       break;
     case ActionID.Divide:
-      result = firstOperand / secondOperand;
-      // handle infinity
+      if (secondOperand == 0) {
+        return errorText;
+      } else {
+        result = firstOperand / secondOperand;
+      }
       break;
     default:
       print("The default was reached in calculateResult");
       break;
   }
 
+  print("Result as a double >>>> $result");
   String resultAsString = convertTo3dp(result);
   return reformatNumber(resultAsString);
 }
@@ -58,7 +66,6 @@ double extractDoubleFromString(String numStr) {
 }
 
 String convertTo3dp(double value) {
-  print((value));
   if (isInteger(value)) {
     return value.toString().split('.')[0];
   }

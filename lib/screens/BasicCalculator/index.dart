@@ -110,7 +110,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
 
     setState(() {
       if (numberStrToAppend != ".") {
-        if (_currentOperand == _zeroStr) {
+        if (_currentOperand == _zeroStr || errorOnScreen(_currentOperand)) {
           _currentOperand = numberStrToAppend;
           return;
         }
@@ -152,10 +152,11 @@ class _BasicCalculatorState extends State<BasicCalculator> {
   void chooseOperation(ActionID _selectedOperation) {
     if (_currentOperation != null) {
       displayResultOfCalculation();
+      if (errorOnScreen(_currentOperand)) return;
     }
 
     setState(() {
-      _previousOperand = _currentOperand + " ${_selectedOperation.symbol} ";
+      _previousOperand = "$_currentOperand ${_selectedOperation.symbol}";
       _currentOperand = _zeroStr;
       _currentOperation = _selectedOperation;
     });
@@ -163,13 +164,18 @@ class _BasicCalculatorState extends State<BasicCalculator> {
 
   void displayResultOfCalculation() {
     setState(() {
-      _currentOperand = calculateResult(_previousOperand, _currentOperand, _currentOperation);
+      _currentOperand =
+          calculateResult(_previousOperand, _currentOperand, _currentOperation);
       _previousOperand = "";
       _currentOperation = null;
     });
   }
 
   void actionButtonPressed(ActionID actionId) {
+    if (errorOnScreen(_currentOperand) &&
+        actionId != ActionID.AC &&
+        actionId != ActionID.Backspace) return;
+
     switch (actionId) {
       case ActionID.AC:
         allClear();
@@ -196,7 +202,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
         displayResultOfCalculation();
         break;
       case ActionID.Backspace:
-        deleteNumber();
+        errorOnScreen(_currentOperand) ? allClear() : deleteNumber();
         break;
       default:
         break;
