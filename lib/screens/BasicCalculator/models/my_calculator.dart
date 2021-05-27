@@ -46,7 +46,7 @@ class MyCalculator extends ChangeNotifier {
     RegExp regexNegativeDigit = RegExp(r"^-\d{1}$");
     RegExp regexPositiveDigit = RegExp(r"^\d{1}$");
 
-    if (regexNegativeDigit.hasMatch(_currentOperand)) {
+    if (regexNegativeDigit.hasMatch(_currentOperand)){
       _currentOperand = _negativeSignStr + _zeroStr;
       return;
     }
