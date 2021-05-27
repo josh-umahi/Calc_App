@@ -1,10 +1,10 @@
-import 'package:calc_app/screens/BasicCalculator/models/my_calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'action_button.dart';
 import 'number_button.dart';
 import '../models/enums.dart';
+import '../models/my_calculator.dart';
 
 class TableOfButtons extends StatelessWidget {
   @override

@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import './theme.dart';
-import './screens/BasicCalculator/index.dart';
-import './screens/BasicCalculator/models/my_calculator.dart';
+import 'basic_calculator.dart';
+import './models/my_calculator.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);

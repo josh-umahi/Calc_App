@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../constants.dart';
-import 'components/table_of_buttons.dart';
+import 'constants.dart';
+import './components/table_of_buttons.dart';
 import './components/entries_and_results_display.dart';
 
 class BasicCalculatorScreen extends StatelessWidget {

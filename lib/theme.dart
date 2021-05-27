@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import './constants.dart';
 
 ThemeData lightThemeData(BuildContext context) {
-  return ThemeData.light().copyWith(
+  return ThemeData.dark().copyWith(
     primaryColor: Colors.white,
     accentColor: lightLowerBgColor,
     scaffoldBackgroundColor: darkLowerBgColor,
@@ -16,7 +16,7 @@ ThemeData lightThemeData(BuildContext context) {
 }
 
 ThemeData darkThemeData(BuildContext context) {
-  return ThemeData.light().copyWith(
+  return ThemeData.dark().copyWith(
     primaryColor: darkPrimaryColor,
     accentColor: darkLowerBgColor,
     scaffoldBackgroundColor: darkPrimaryColor,

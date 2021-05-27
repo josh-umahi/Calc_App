@@ -52,10 +52,6 @@ String calculateResult({
       print("The default was reached in calculateResult");
       break;
   }
-  // print("previous: << $previousOperandWithOperation");
-  // print("currentOperation: << $currentOperation");
-  // print("currentOperand: << $currentOperand");
-  // print("Result as a double >>>> $result");
   String resultRounded = roundToDecimalPlaces(result);
 
   if (resultRounded.length > maxResultLength) {

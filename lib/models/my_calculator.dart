@@ -70,7 +70,7 @@ class MyCalculator extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Toggle the sign of [_currentOperand] between negative and positive
+  /// Toggles the sign of [_currentOperand] between negative and positive
   void changeSign() {
     _currentOperand = (_currentOperand.contains(_negativeSignStr))
         ? _currentOperand.replaceFirst(_negativeSignStr, '')
