@@ -40,7 +40,7 @@ class PreviousOperandWithOperation extends StatelessWidget {
   Widget build(BuildContext context) {
     final previousOperandWithOperation = context.select<MyCalculator, String>(
         (myCalculator) => myCalculator.previousOperandWithOperation);
-        print("I previousOperandWithOperation");
+
     return Text(
       previousOperandWithOperation,
       style: TextStyle(
@@ -56,7 +56,7 @@ class CurrentOperand extends StatelessWidget {
   Widget build(BuildContext context) {
     final currentOperand = context.select<MyCalculator, String>(
         (myCalculator) => myCalculator.currentOperand);
-        print("I currentOperand");
+
     return Text(
       currentOperand,
       style: TextStyle(
