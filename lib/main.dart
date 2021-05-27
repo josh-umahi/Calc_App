@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import './theme.dart';
@@ -9,15 +8,12 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'The Calc App',
       debugShowCheckedModeBanner: false,
-      theme: lightThemeData(context),
-      darkTheme: darkThemeData(context),
-      themeMode: ThemeMode.dark,
+      theme: darkThemeData(context),
       home: BasicCalculator(),
     );
   }

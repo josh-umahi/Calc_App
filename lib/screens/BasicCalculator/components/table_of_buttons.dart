@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../components/ActionButton.dart';
-import '../components/NumberButton.dart';
+import 'action_button.dart';
+import 'number_button.dart';
 import '../enums.dart';
 
 class TableOfButtons extends StatelessWidget {
@@ -93,9 +93,10 @@ class TableOfButtons extends StatelessWidget {
     );
   }
 
+  /// Create an empty row to serve as spacing between two rows
   TableRow _buildTableRowSpacing() {
     return TableRow(
-      children: List.generate(4, (index) => SizedBox(height: 22.4)),
+      children: List.generate(4, (index) => SizedBox(height: 20)),
     );
   }
 }

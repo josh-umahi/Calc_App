@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
-import './widgets/TableOfButtons.dart';
+import 'components/table_of_buttons.dart';
 import './enums.dart';
 import './functions.dart';
 
@@ -113,7 +113,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
 
     setState(() {
       if (numberStrToAppend != ".") {
-        if (_currentOperand == _zeroStr || errorOnScreen(_currentOperand)) {
+        if (_currentOperand == _zeroStr || isErrorOnScreen(_currentOperand)) {
           _currentOperand = numberStrToAppend;
           return;
         }
@@ -155,7 +155,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
   void chooseOperation(ActionID _selectedOperation) {
     if (_currentOperation != null) {
       displayResultOfCalculation();
-      if (errorOnScreen(_currentOperand)) return;
+      if (isErrorOnScreen(_currentOperand)) return;
     }
 
     setState(() {
@@ -167,15 +167,18 @@ class _BasicCalculatorState extends State<BasicCalculator> {
 
   void displayResultOfCalculation() {
     setState(() {
-      _currentOperand =
-          calculateResult(_previousOperand, _currentOperand, _currentOperation);
-      _previousOperand = "";
+      _currentOperand = calculateResult(
+        previousOperand: _previousOperand,
+        currentOperand: _currentOperand,
+        currentOperation: _currentOperation,
+      );
+      _previousOperand = '';
       _currentOperation = null;
     });
   }
 
   void actionButtonPressed(ActionID actionId) {
-    if (errorOnScreen(_currentOperand) &&
+    if (isErrorOnScreen(_currentOperand) &&
         actionId != ActionID.AC &&
         actionId != ActionID.Backspace) return;
 
@@ -205,7 +208,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
         displayResultOfCalculation();
         break;
       case ActionID.Backspace:
-        errorOnScreen(_currentOperand) ? allClear() : deleteNumber();
+        isErrorOnScreen(_currentOperand) ? allClear() : deleteNumber();
         break;
       default:
         break;

@@ -6,25 +6,32 @@ const errorText = "Error";
 const decimalPlaces = 3;
 const maxResultLength = 9 + decimalPlaces;
 
-bool errorOnScreen(String _currentOperand) {
+/// Return true if the [_currentOperand] currently has
+/// [errorText] displayed on the screen
+bool isErrorOnScreen(String _currentOperand) {
   return _currentOperand == errorText;
 }
 
 /// Calculates the result of operation and
-/// returns this as a string in the appropriate format
-String calculateResult(
-  String _previousOperand,
-  String _currentOperand,
-  ActionID? _currentOperation,
-) {
-  if (_previousOperand.isEmpty || _currentOperation == null)
-    return _currentOperand;
+/// returns this as a string that is appropriately 
+/// formatted with commas 
+/// 
+/// For results greater than [maxResultLength], 
+/// a string containing scientific notation 
+/// to [decimalPlaces] decimal places is returned
+String calculateResult({
+  required String previousOperand,
+  required String currentOperand,
+  ActionID? currentOperation,
+}) {
+  if (previousOperand.isEmpty || currentOperation == null)
+    return currentOperand;
 
-  double firstOperand = extractDoubleFromString(_previousOperand);
-  double secondOperand = extractDoubleFromString(_currentOperand);
+  double firstOperand = extractDoubleFromString(previousOperand);
+  double secondOperand = extractDoubleFromString(currentOperand);
   double result = 0;
 
-  switch (_currentOperation) {
+  switch (currentOperation) {
     case ActionID.Add:
       result = firstOperand + secondOperand;
       break;
@@ -51,16 +58,34 @@ String calculateResult(
   if (resultRounded.length > maxResultLength) {
     return result.toStringAsExponential(3);
   }
-  return reformatNumber(resultRounded);
+  return reformatNumber(resultRounded, isCalculationResult: true);
 }
 
-String reformatNumber(String numberToReformat) {
-  List<String> numberSplit = numberToReformat.split('.');
+/// Given a string containing just numbers and
+/// possibly a decimal point, return a new string with
+/// the same numbers and appropriate commas
+///
+/// If [isCalculationResult] is true, then we know that numStr is a
+/// calculation result and is therefore guaranteed to have no commas 
+/// so don't account for such when converting it to an integer 
+String reformatNumber(String numStr, {bool isCalculationResult = false}) {
+  List<String> numberSplit = numStr.split('.');
   String integerSection = numberSplit[0];
 
   if (integerSection.length > 3) {
+    // Number format to format the string of numbers to
+    // one containing commas
     var f = NumberFormat();
-    integerSection = f.format(int.parse(integerSection.replaceAll(',', '')));
+
+    if (isCalculationResult) {
+      integerSection = f.format(int.parse(integerSection));
+    } else {
+      integerSection = f.format(
+        int.parse(
+          integerSection.replaceAll(',', ''),
+        ),
+      );
+    }
   }
 
   if (numberSplit.length == 1) {
@@ -69,10 +94,14 @@ String reformatNumber(String numberToReformat) {
   return "$integerSection.${numberSplit[1]}";
 }
 
+/// Extract the number from a string, strip it of
+/// its commas and return as a double
 double extractDoubleFromString(String numStr) {
   return double.parse(numStr.split(' ')[0].replaceAll(',', ''));
 }
 
+/// Rounds the given double to [decimalPlaces] number of
+/// decimal places and returns this as a string
 String roundToDecimalPlaces(double value) {
   if (isInteger(value)) {
     return value.toString().split('.')[0];
@@ -85,6 +114,8 @@ String roundToDecimalPlaces(double value) {
   return result;
 }
 
+/// Returns true if the given double has non-zero or
+/// no decimal places, false otherwise
 bool isInteger(double value) {
   return value is int || value == value.roundToDouble();
 }
