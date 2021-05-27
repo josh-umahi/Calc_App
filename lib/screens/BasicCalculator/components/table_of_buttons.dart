@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'action_button.dart';
 import 'number_button.dart';
-import '../enums.dart';
+import '../models/enums.dart';
 
 class TableOfButtons extends StatelessWidget {
   final Function(String) numberButtonPressed;

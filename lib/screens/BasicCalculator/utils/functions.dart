@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-import '../../screens/BasicCalculator/enums.dart';
+import '../models/enums.dart';
 
 const errorText = "Error";
 const decimalPlaces = 3;

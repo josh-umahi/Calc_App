@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
-import '../enums.dart';
+import '../models/enums.dart';
 
 // ignore: must_be_immutable
 class ActionButton extends StatelessWidget {
