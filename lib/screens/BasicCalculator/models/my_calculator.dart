@@ -68,7 +68,19 @@ class MyCalculator extends ChangeNotifier {
     notifyListeners();
   }
 
-  void chooseOperation(ActionID _selectedOperation) {
+  void displayResultOfCalculation() {
+    _currentOperand = calculateResult(
+      previousOperandWithOperation: _previousOperandWithOperation,
+      currentOperand: _currentOperand,
+      currentOperation: _currentOperation,
+    );
+    _previousOperandWithOperation = '';
+    _currentOperation = null;
+
+    notifyListeners();
+  }
+
+  void chooseArithmeticOperation(ActionID _selectedOperation) {
     if (_currentOperation != null) {
       displayResultOfCalculation();
       if (isErrorOnScreen(_currentOperand)) return;
@@ -82,19 +94,7 @@ class MyCalculator extends ChangeNotifier {
     notifyListeners();
   }
 
-  void displayResultOfCalculation() {
-    _currentOperand = calculateResult(
-      previousOperandWithOperation: _previousOperandWithOperation,
-      currentOperand: _currentOperand,
-      currentOperation: _currentOperation,
-    );
-    _previousOperandWithOperation = '';
-    _currentOperation = null;
-
-    notifyListeners();
-  }
-
-  void actionButtonPressed(ActionID actionId) {
+  void chooseNonArithmeticOperation(ActionID actionId) {
     if (isErrorOnScreen(_currentOperand) &&
         actionId != ActionID.AC &&
         actionId != ActionID.Backspace) return;
@@ -109,18 +109,6 @@ class MyCalculator extends ChangeNotifier {
       case ActionID.ChangeSign:
         changeSign();
         break;
-      case ActionID.Divide:
-        chooseOperation(ActionID.Divide);
-        break;
-      case ActionID.Multiply:
-        chooseOperation(ActionID.Multiply);
-        break;
-      case ActionID.Subtract:
-        chooseOperation(ActionID.Subtract);
-        break;
-      case ActionID.Add:
-        chooseOperation(ActionID.Add);
-        break;
       case ActionID.Equals:
         displayResultOfCalculation();
         break;
@@ -128,6 +116,7 @@ class MyCalculator extends ChangeNotifier {
         isErrorOnScreen(_currentOperand) ? allClear() : deleteNumber();
         break;
       default:
+        print("The default was reached in chooseNonArithmeticOperation");
         break;
     }
   }

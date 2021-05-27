@@ -1,91 +1,91 @@
+import 'package:calc_app/screens/BasicCalculator/models/my_calculator.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'action_button.dart';
 import 'number_button.dart';
 import '../models/enums.dart';
 
 class TableOfButtons extends StatelessWidget {
-  final Function(String) numberButtonPressed;
-  final Function(ActionID actionId) actionButtonPressed;
-
-  const TableOfButtons({
-    Key? key,
-    required this.numberButtonPressed,
-    required this.actionButtonPressed,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    final void Function(String) appendNumber =
+        context.read<MyCalculator>().appendNumber;
+    final void Function(ActionID) chooseArithmeticOperation =
+        context.read<MyCalculator>().chooseArithmeticOperation;
+    final void Function(ActionID) chooseNonArithmeticOperation =
+        context.read<MyCalculator>().chooseNonArithmeticOperation;
+
     return Table(
       children: [
         TableRow(
           children: [
             ActionButton(
               actionId: ActionID.AC,
-              actionButtonPressed: actionButtonPressed,
+              actionButtonPressed: chooseNonArithmeticOperation,
             ),
             ActionButton(
               actionId: ActionID.ChangeTheme,
-              actionButtonPressed: actionButtonPressed,
+              actionButtonPressed: chooseNonArithmeticOperation,
             ),
             ActionButton(
               actionId: ActionID.ChangeSign,
-              actionButtonPressed: actionButtonPressed,
+              actionButtonPressed: chooseNonArithmeticOperation,
             ),
             ActionButton(
               actionId: ActionID.Divide,
-              actionButtonPressed: actionButtonPressed,
+              actionButtonPressed: chooseArithmeticOperation,
             ),
           ],
         ),
         _buildTableRowSpacing(),
         TableRow(
           children: [
-            NumberButton('7', numberButtonPressed),
-            NumberButton('8', numberButtonPressed),
-            NumberButton('9', numberButtonPressed),
+            NumberButton('7', appendNumber),
+            NumberButton('8', appendNumber),
+            NumberButton('9', appendNumber),
             ActionButton(
               actionId: ActionID.Multiply,
-              actionButtonPressed: actionButtonPressed,
+              actionButtonPressed: chooseArithmeticOperation,
             ),
           ],
         ),
         _buildTableRowSpacing(),
         TableRow(
           children: [
-            NumberButton('4', numberButtonPressed),
-            NumberButton('5', numberButtonPressed),
-            NumberButton('6', numberButtonPressed),
+            NumberButton('4', appendNumber),
+            NumberButton('5', appendNumber),
+            NumberButton('6', appendNumber),
             ActionButton(
               actionId: ActionID.Subtract,
-              actionButtonPressed: actionButtonPressed,
+              actionButtonPressed: chooseArithmeticOperation,
             ),
           ],
         ),
         _buildTableRowSpacing(),
         TableRow(
           children: [
-            NumberButton('1', numberButtonPressed),
-            NumberButton('2', numberButtonPressed),
-            NumberButton('3', numberButtonPressed),
+            NumberButton('1', appendNumber),
+            NumberButton('2', appendNumber),
+            NumberButton('3', appendNumber),
             ActionButton(
               actionId: ActionID.Add,
-              actionButtonPressed: actionButtonPressed,
+              actionButtonPressed: chooseArithmeticOperation,
             ),
           ],
         ),
         _buildTableRowSpacing(),
         TableRow(
           children: [
-            NumberButton('0', numberButtonPressed),
-            NumberButton('.', numberButtonPressed),
+            NumberButton('0', appendNumber),
+            NumberButton('.', appendNumber),
             ActionButton(
               actionId: ActionID.Backspace,
-              actionButtonPressed: actionButtonPressed,
+              actionButtonPressed: chooseNonArithmeticOperation,
             ),
             ActionButton(
               actionId: ActionID.Equals,
-              actionButtonPressed: actionButtonPressed,
+              actionButtonPressed: chooseNonArithmeticOperation,
             ),
           ],
         ),
@@ -93,7 +93,7 @@ class TableOfButtons extends StatelessWidget {
     );
   }
 
-  /// Create an empty row to serve as spacing between two rows
+  /// Creates an empty row of certain height to serve as spacing between two rows
   TableRow _buildTableRowSpacing() {
     return TableRow(
       children: List.generate(4, (index) => SizedBox(height: 20)),

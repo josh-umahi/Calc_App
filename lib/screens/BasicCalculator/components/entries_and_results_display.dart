@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
+import '../models/my_calculator.dart';
 
 class EntriesAndResultsDisplay extends StatelessWidget {
   @override
@@ -14,13 +16,7 @@ class EntriesAndResultsDisplay extends StatelessWidget {
             reverse: true,
             scrollDirection: Axis.horizontal,
             children: [
-              Text(
-                _previousOperandWithOperation,
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.white,
-                ),
-              ),
+              PreviousOperandWithOperation(),
             ],
           ),
         ),
@@ -31,16 +27,42 @@ class EntriesAndResultsDisplay extends StatelessWidget {
           width: double.infinity,
           child: FittedBox(
             fit: BoxFit.scaleDown,
-            child: Text(
-              _currentOperand,
-              style: TextStyle(
-                fontSize: 70,
-                color: Colors.white,
-              ),
-            ),
+            child: CurrentOperand(),
           ),
         ),
       ],
+    );
+  }
+}
+
+class PreviousOperandWithOperation extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final previousOperandWithOperation = context.select<MyCalculator, String>(
+        (myCalculator) => myCalculator.previousOperandWithOperation);
+        print("I previousOperandWithOperation");
+    return Text(
+      previousOperandWithOperation,
+      style: TextStyle(
+        fontSize: 25,
+        color: Colors.white,
+      ),
+    );
+  }
+}
+
+class CurrentOperand extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final currentOperand = context.select<MyCalculator, String>(
+        (myCalculator) => myCalculator.currentOperand);
+        print("I currentOperand");
+    return Text(
+      currentOperand,
+      style: TextStyle(
+        fontSize: 70,
+        color: Colors.white,
+      ),
     );
   }
 }

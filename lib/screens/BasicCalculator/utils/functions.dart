@@ -6,8 +6,8 @@ const errorText = "Error";
 const decimalPlaces = 3;
 const maxResultLength = 9 + decimalPlaces;
 
-/// Return true if the [_currentOperand] currently has
-/// [errorText] displayed on the screen
+/// Return true if the [_currentOperand] currently holds
+/// the value [errorText]
 bool isErrorOnScreen(String _currentOperand) {
   return _currentOperand == errorText;
 }
@@ -52,7 +52,10 @@ String calculateResult({
       print("The default was reached in calculateResult");
       break;
   }
-  print("Result as a double >>>> $result");
+  // print("previous: << $previousOperandWithOperation");
+  // print("currentOperation: << $currentOperation");
+  // print("currentOperand: << $currentOperand");
+  // print("Result as a double >>>> $result");
   String resultRounded = roundToDecimalPlaces(result);
 
   if (resultRounded.length > maxResultLength) {
