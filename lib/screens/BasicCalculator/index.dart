@@ -15,7 +15,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
   static const _negativeSignStr = '-';
   static const _maxInputLength = maxResultLength;
 
-  String _previousOperand = '';
+  String _previousOperandWithOperation = '';
   String _currentOperand = _zeroStr;
   ActionID? _currentOperation;
 
@@ -26,7 +26,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
   }
 
   Widget build(BuildContext context) {
-    print("_previousOperand: $_previousOperand");
+    print("_previousOperandWithOperation: $_previousOperandWithOperation");
     print("_currentOperand: $_currentOperand");
     print("_currentOperation: $_currentOperation");
     return Scaffold(
@@ -46,7 +46,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
                       scrollDirection: Axis.horizontal,
                       children: [
                         Text(
-                          _previousOperand,
+                          _previousOperandWithOperation,
                           style: TextStyle(
                             fontSize: 25,
                             color: Colors.white,
@@ -101,7 +101,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
 
   void allClear() {
     setState(() {
-      _previousOperand = "";
+      _previousOperandWithOperation = "";
       _currentOperand = _zeroStr;
       _currentOperation = null;
     });
@@ -159,7 +159,7 @@ class _BasicCalculatorState extends State<BasicCalculator> {
     }
 
     setState(() {
-      _previousOperand = "$_currentOperand ${_selectedOperation.symbol}";
+      _previousOperandWithOperation = "$_currentOperand ${_selectedOperation.symbol}";
       _currentOperand = _zeroStr;
       _currentOperation = _selectedOperation;
     });
@@ -168,11 +168,11 @@ class _BasicCalculatorState extends State<BasicCalculator> {
   void displayResultOfCalculation() {
     setState(() {
       _currentOperand = calculateResult(
-        previousOperand: _previousOperand,
+        previousOperandWithOperation: _previousOperandWithOperation,
         currentOperand: _currentOperand,
         currentOperation: _currentOperation,
       );
-      _previousOperand = '';
+      _previousOperandWithOperation = '';
       _currentOperation = null;
     });
   }

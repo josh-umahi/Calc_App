@@ -20,14 +20,14 @@ bool isErrorOnScreen(String _currentOperand) {
 /// a string containing scientific notation 
 /// to [decimalPlaces] decimal places is returned
 String calculateResult({
-  required String previousOperand,
+  required String previousOperandWithOperation,
   required String currentOperand,
   ActionID? currentOperation,
 }) {
-  if (previousOperand.isEmpty || currentOperation == null)
+  if (previousOperandWithOperation.isEmpty || currentOperation == null)
     return currentOperand;
 
-  double firstOperand = extractDoubleFromString(previousOperand);
+  double firstOperand = extractDoubleFromString(previousOperandWithOperation);
   double secondOperand = extractDoubleFromString(currentOperand);
   double result = 0;
 

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import './theme.dart';
 import './screens/BasicCalculator/index.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
   runApp(MyApp());
 }
 
@@ -18,4 +20,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
