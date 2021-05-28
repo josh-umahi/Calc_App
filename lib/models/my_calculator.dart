@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
 import './enums.dart';
-import '../utils/functions.dart';
+import '../functions/functions.dart';
+import '../theme.dart';
 
 class MyCalculator extends ChangeNotifier {
+  ThemeData Function() _themeData = darkThemeData;
+  ThemeData Function() get themeData => _themeData;
+
   static const _zeroStr = '0';
   static const _negativeSignStr = '-';
   static const _maxInputLength = maxResultLength;
@@ -14,6 +18,12 @@ class MyCalculator extends ChangeNotifier {
   String get currentOperand => _currentOperand;
   ActionID? _currentOperation;
   ActionID? get currentOperation => _currentOperation;
+
+  /// Toggle [_themeData] between light and dark theme
+  void toggleThemeData() {
+    _themeData = _themeData == darkThemeData ? lightThemeData : darkThemeData;
+    notifyListeners();
+  }
 
   /// Empties the content of [_previousOperandWithOperation] and [_currentOperation]
   /// and also reverts [_currentOperand] to [_zeroStr] which is its own form of empty
@@ -134,7 +144,7 @@ class MyCalculator extends ChangeNotifier {
         allClear();
         break;
       case ActionID.ChangeTheme:
-        // A Function
+        toggleThemeData();
         break;
       case ActionID.ChangeSign:
         changeSign();
