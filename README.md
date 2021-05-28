@@ -2,14 +2,10 @@
 
 **A basic calculator app for iOS and Android (made with Flutter)**
 
-<!-- Screenshots -->
-<p float="left">
-    <img src="screenshots/large_values_dark.jpg" alt="Screenshot of finished app" width="400">
-    <img src="screenshots/large_values_light.jpg" alt="Screenshot of finished app" width="400">
-</p>
-
 I would never have expected a simple calculator to be such an interesting project leaving me with an immense knowledge 
-on flutter and the Dart programming language. 
+on flutter and the Dart programming language.
+
+<br/>
 
 Some of the new things I learned include:
 * State management using the Provider package and ChangeNotifier
@@ -18,6 +14,12 @@ Some of the new things I learned include:
 * How to perform unit tests
 * Optimization techniques such as Extracting Widgets
 
-I can't wait to see what else Flutter has in store!
+<!-- Screenshots -->
+<p float="left">
+    <img src="screenshots/large_values_dark.jpg" alt="Screenshot of finished app" width="250">
+    <img src="screenshots/large_values_light.jpg" alt="Screenshot of finished app" width="250">
+</p>
 
-<!-- More Screenshots -->
+<br/>
+
+I can't wait to see what else Flutter has in store!
