@@ -16,8 +16,8 @@ Some of the new things I learned include:
 
 <!-- Screenshots -->
 <p float="left">
-    <img src="screenshots/large_values_dark.jpg" alt="Screenshot of finished app" width="250">
-    <img src="screenshots/large_values_light.jpg" alt="Screenshot of finished app" width="250">
+    <img src="screenshots/large_values_dark.jpg" alt="Screenshot of finished app" width="300">
+    <img src="screenshots/large_values_light.jpg" alt="Screenshot of finished app" width="300">
 </p>
 
 <br/>
