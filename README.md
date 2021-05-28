@@ -3,6 +3,10 @@
 **A basic calculator app for iOS and Android (made with Flutter)**
 
 <!-- Screenshots -->
+<p float="left">
+    <img src="screenshots/large_values_dark.jpg" alt="Screenshot of finished app" width="400">
+    <img src="screenshots/large_values_light.jpg" alt="Screenshot of finished app" width="400">
+</p>
 
 I would never have expected a simple calculator to be such an interesting project leaving me with an immense knowledge 
 on flutter and the Dart programming language. 
