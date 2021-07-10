@@ -19,6 +19,10 @@ Some of the new things I learned include:
     <img src="screenshots/large_values_dark.jpg" alt="Screenshot of finished app" width="300">
     <img src="screenshots/large_values_light.jpg" alt="Screenshot of finished app" width="300">
 </p>
+<p float="left">
+    <img src="screenshots/scientific_notation_light.jpg" alt="Screenshot of finished app" width="300">
+    <img src="screenshots/scientific_notation_dark.jpg" alt="Screenshot of finished app" width="300">
+</p>
 
 <br/>
 
